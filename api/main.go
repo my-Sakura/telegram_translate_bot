@@ -45,8 +45,8 @@ func init() {
 	//new telegramBot
 	token := os.Getenv("token")
 
-	bot.Debug = true
 	bot, _ = tgbotapi.NewBotAPI(token)
+	bot.Debug = true
 	//new update
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
@@ -56,9 +56,6 @@ func init() {
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	var update tgbotapi.Update
-	if update.Message == nil {
-		return
-	}
 
 	body, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(body, &update)

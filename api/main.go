@@ -50,7 +50,7 @@ func init() {
 	//new update
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
-	link := "https://telegram-translate-bot.vercel.app/"
+	link := "https://translate-one.vercel.app/"
 	bot.SetWebhook(tgbotapi.NewWebhook(link + token))
 }
 
@@ -58,7 +58,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	var update tgbotapi.Update
 
 	body, _ := ioutil.ReadAll(r.Body)
-	json.Unmarshal(body, &update)
+	if err := json.Unmarshal(body, &update); err != nil {
+		return
+	}
 
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 

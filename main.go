@@ -1,4 +1,4 @@
-package api
+package main
 
 import (
 	"crypto/md5"
@@ -50,8 +50,8 @@ func init() {
 	//new update
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
-	link := "translate.my-sakura.vercel.app/"
-
+	// link := "https://translate-one.vercel.app/"
+	link := "https://e1b5b78dfd47.ngrok.io/"
 	bot.SetWebhook(tgbotapi.NewWebhook(link + token))
 }
 
@@ -87,4 +87,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if _, err = bot.Send(msg); err != nil {
 		fmt.Println(err)
 	}
+}
+
+func main() {
+	http.HandleFunc("/1306747225:AAEpFms8-OJCb2VcuMt04AW5xR6SUVz9wCM", Handler)
+	http.ListenAndServe(":1000", nil)
 }

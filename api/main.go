@@ -50,6 +50,7 @@ func init() {
 	//new update
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
+	//a
 	link := "translate.my-sakura.vercel.app/"
 
 	bot.SetWebhook(tgbotapi.NewWebhook(link + token))

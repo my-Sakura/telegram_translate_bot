@@ -50,7 +50,6 @@ func init() {
 	//new update
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
-	//a
 	// link := "https://translate.my-sakura.vercel.app/"
 
 	link := "https://translate-beta.vercel.app/"
@@ -61,12 +60,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	var update tgbotapi.Update
 	appid := os.Getenv("appid")
 	secret := os.Getenv("secret")
+	fmt.Fprintf(w, "hello1")
 
 	body, _ := ioutil.ReadAll(r.Body)
 	if err := json.Unmarshal(body, &update); err != nil {
 		return
 	}
-	fmt.Fprintf(w, "hello1")
 
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 	var target result

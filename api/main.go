@@ -42,7 +42,6 @@ func httpGet(url string) ([]byte, error) {
 var bot *tgbotapi.BotAPI
 
 func init() {
-	//new telegramBot
 	token := os.Getenv("token")
 
 	bot, _ = tgbotapi.NewBotAPI(token)
@@ -61,12 +60,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	appid := os.Getenv("appid")
 	secret := os.Getenv("secret")
 	fmt.Fprintf(w, "hello1")
-	fmt.Fprintf(w, "hello1")
 
 	body, _ := ioutil.ReadAll(r.Body)
 	if err := json.Unmarshal(body, &update); err != nil {
-		fmt.Fprintf(w, appid, secret)
-		return
+		fmt.Println(err)
 	}
 
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")

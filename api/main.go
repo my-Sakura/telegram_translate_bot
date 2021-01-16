@@ -88,4 +88,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if _, err = bot.Send(msg); err != nil {
 		fmt.Println(err)
 	}
+
+	msg.Text = appid
+	if _, err = bot.Send(msg); err != nil {
+		fmt.Println(err)
+
+		msg.Text = secret
+		if _, err = bot.Send(msg); err != nil {
+			fmt.Println(err)
+
+		}
+	}
 }

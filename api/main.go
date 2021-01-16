@@ -49,9 +49,8 @@ func init() {
 	//new update
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
-	// link := "https://translate.my-sakura.vercel.app/"
 
-	link := "https://translate-beta.vercel.app/"
+	link := "https://telegram-translate-bot.vercel.app/"
 	bot.SetWebhook(tgbotapi.NewWebhook(link + token))
 }
 
@@ -79,7 +78,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Fprintf(w, "hello2")
 
 	err = json.Unmarshal(result, &target)
 	if err != nil {

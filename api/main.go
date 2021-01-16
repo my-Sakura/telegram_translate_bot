@@ -66,6 +66,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if err := json.Unmarshal(body, &update); err != nil {
 		return
 	}
+	fmt.Fprintf(w, "hello1")
 
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 	var target result
@@ -80,6 +81,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Fprintf(w, "hello2")
 
 	err = json.Unmarshal(result, &target)
 	if err != nil {
@@ -89,4 +91,5 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if _, err = bot.Send(msg); err != nil {
 		fmt.Println(err)
 	}
+	fmt.Fprintf(w, "hello3")
 }

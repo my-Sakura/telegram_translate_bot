@@ -92,5 +92,5 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if _, err = bot.Send(msg); err != nil {
 		fmt.Println(err)
 	}
-	fmt.Fprintf(w, "hello3")
+	select {}
 }

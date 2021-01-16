@@ -58,6 +58,8 @@ func init() {
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	var update tgbotapi.Update
+	appid := os.Getenv("appid")
+	secret := os.Getenv("secret")
 
 	body, _ := ioutil.ReadAll(r.Body)
 	if err := json.Unmarshal(body, &update); err != nil {
@@ -65,38 +67,35 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
-
-	var target result
-	//baidu appid
-	appid := os.Getenv("appid")
-	q := update.Message.Text
-	salt := 123
-	secret := os.Getenv("secret")
-	data := []byte(appid + q + strconv.Itoa(salt) + secret)
-	sign := fmt.Sprintf("%x", md5.Sum(data))
-	url := fmt.Sprintf("https://fanyi-api.baidu.com/api/trans/vip/translate?q=%s&from=%s&to=%s&salt=%d&appid=%s&sign=%s", q, "auto", "en", salt, appid, sign)
-	result, err := httpGet(url)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	err = json.Unmarshal(result, &target)
-	if err != nil {
-		fmt.Println(err)
-	}
-	msg.Text = target.Trans_result[0].Dst
-	if _, err = bot.Send(msg); err != nil {
-		fmt.Println(err)
-	}
-
 	msg.Text = appid
-	if _, err = bot.Send(msg); err != nil {
+	if _, err := bot.Send(msg); err != nil {
 		fmt.Println(err)
 
 		msg.Text = secret
 		if _, err = bot.Send(msg); err != nil {
 			fmt.Println(err)
+		}
 
+		var target result
+		//baidu appid
+
+		q := update.Message.Text
+		salt := 123
+		data := []byte(appid + q + strconv.Itoa(salt) + secret)
+		sign := fmt.Sprintf("%x", md5.Sum(data))
+		url := fmt.Sprintf("https://fanyi-api.baidu.com/api/trans/vip/translate?q=%s&from=%s&to=%s&salt=%d&appid=%s&sign=%s", q, "auto", "en", salt, appid, sign)
+		result, err := httpGet(url)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		err = json.Unmarshal(result, &target)
+		if err != nil {
+			fmt.Println(err)
+		}
+		msg.Text = target.Trans_result[0].Dst
+		if _, err = bot.Send(msg); err != nil {
+			fmt.Println(err)
 		}
 	}
 }

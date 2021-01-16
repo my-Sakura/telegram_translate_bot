@@ -65,7 +65,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	body, _ := ioutil.ReadAll(r.Body)
 	if err := json.Unmarshal(body, &update); err != nil {
-		fmt.Fprintf(w, "hello3%s", string(body))
+		fmt.Fprintf(w, "hello3%s%v", string(body), err)
 		return
 	}
 	fmt.Fprintf(w, "hello3%s", string(body))
